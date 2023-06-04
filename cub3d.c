@@ -29,39 +29,40 @@ void	draw_player(t_mlx *mlx)
 	}
 }
 
-void	draw_ray_end(t_mlx *mlx)
+void	draw_wall_brick(t_mlx *mlx)
 {
 	char	*dst;
 
-	mlx->rimg1 = mlx_new_image(mlx->mlx, 5, 5);
-	mlx->addr = mlx_get_data_addr(mlx->rimg1, &mlx->bpp, &mlx->ll, &mlx->endian);
+	mlx->wimg1 = mlx_new_image(mlx->mlx, 10, 5);
+	mlx->addr = mlx_get_data_addr(mlx->wimg1, &mlx->bpp, &mlx->ll, &mlx->endian);
 	
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 5; j++)
 		{
 			dst = mlx->addr + (j * mlx->ll + i * (mlx->bpp / 8));
-			*(unsigned int *)dst = 0x00FF0000;
+			*(unsigned int *)dst = mlx->map.wall_color;
 		}
 	}
 
-	mlx->rimg2 = mlx_new_image(mlx->mlx, 5, 5);
-	mlx->addr = mlx_get_data_addr(mlx->rimg2, &mlx->bpp, &mlx->ll, &mlx->endian);
+	mlx->wimg2 = mlx_new_image(mlx->mlx, 10, 5);
+	mlx->addr = mlx_get_data_addr(mlx->wimg2, &mlx->bpp, &mlx->ll, &mlx->endian);
 	
-	for (int i = 0; i < 5; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 5; j++)
 		{
 			dst = mlx->addr + (j * mlx->ll + i * (mlx->bpp / 8));
-			*(unsigned int *)dst = 0x000000FF;
+			*(unsigned int *)dst = 0x00888888;
 		}
 	}
 }
 
 int	close_window(t_mlx *mlx)
 {
-	mlx_destroy_image(mlx->mlx, mlx->img);
-	mlx_destroy_image(mlx->mlx, mlx->pimg);
+	mlx_destroy_image(mlx->mlx, mlx->bg);
+	mlx_destroy_image(mlx->mlx, mlx->wimg1);
+	mlx_destroy_image(mlx->mlx, mlx->wimg2);
 	mlx_destroy_window(mlx->mlx, mlx->mlx_win);
 	mlx_destroy_display(mlx->mlx);
 	free(mlx->mlx);
@@ -81,50 +82,13 @@ t_mlx	*make_bg(t_mlx *mlx)
 		while (j < mlx->length / 2)
 		{
 			dst = mlx->addr + (j * mlx->ll + i * (mlx->bpp / 8));
-			*(unsigned int *)dst = 0x000EEEEEE;
+			*(unsigned int *)dst = mlx->map.sky_color;
 			j++;
 		}
 		while (j < mlx->length)
 		{
 			dst = mlx->addr + (j * mlx->ll + i * (mlx->bpp / 8));
-			*(unsigned int *)dst = 0x000000000;
-			j++;
-		}
-		i++;
-	}
-	return (mlx);
-}
-
-t_mlx	*make_img(t_mlx *mlx)
-{
-	int		i;
-	int		j;
-	int 	color;
-	int		stopx;
-	int		stopy;
-	char	*dst;
-
-	i = 0;
-	while (i < mlx->width)
-	{
-		j = 0;
-		stopx = 0;
-		while (j < mlx->length)
-		{
-			stopy = 0;
-			if (!stopx && !stopy && mlx->map.map[j / 64] && i / 64 < 9
-				&& mlx->map.map[j / 64][i / 64] == '1')
-				color = 0x000FFFFFF;
-			else
-			{
-				if (!stopx && !mlx->map.map[j / 64])
-					stopx = 1;
-				if (!stopy && i / 64 > 8)
-					stopy = 1;
-				color = 0x000000000;
-			}
-			dst = mlx->addr + (j * mlx->ll + i * (mlx->bpp / 8));
-			*(unsigned int *)dst = color;
+			*(unsigned int *)dst = mlx->map.floor_color;
 			j++;
 		}
 		i++;
@@ -134,22 +98,22 @@ t_mlx	*make_img(t_mlx *mlx)
 
 void	init_screen(t_mlx *mlx)
 {
-	mlx->width = 960;
+	mlx->width = 900;
 	mlx->length = 540;
 	// mlx->bg = mlx_new_image(mlx->mlx, mlx->width, mlx->length);
 	// mlx->addr = mlx_get_data_addr(mlx->bg, &mlx->bpp, &mlx->ll, &mlx->endian);
 	// mlx = make_bg(mlx);
 
-	mlx->img = mlx_new_image(mlx->mlx, mlx->width, mlx->length);
-	mlx->addr = mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->ll, &mlx->endian);
-	mlx = make_img(mlx);
+	mlx->bg = mlx_new_image(mlx->mlx, mlx->width, mlx->length);
+	mlx->addr = mlx_get_data_addr(mlx->bg, &mlx->bpp, &mlx->ll, &mlx->endian);
+	mlx = make_bg(mlx);
 }
 
 void	init_test_map(t_mlx *mlx)
 {
-	mlx->map.floor_color = 0x000000000;
-	mlx->map.sky_color = 0x000FFFFFF;
-	mlx->map.wall_color = 0x000AAAAAA;
+	mlx->map.floor_color = 0x00000000;
+	mlx->map.sky_color = 0x00FFFFFF;
+	mlx->map.wall_color = 0x00AAAAAA;
 	mlx->map.mapx = 8;
 	mlx->map.mapy = 8;
 	mlx->map.map = malloc(sizeof(char *) * 9);
@@ -176,17 +140,49 @@ float	pythagore(float rx, float ry, float px, float py)
 	return (sqrt((px - rx) * (px - rx) + (py - ry) * (py - ry)));
 }
 
+void	draw_wall(t_mlx *mlx, float dist, int index, int type)
+{
+	int	nb_brick;
+	int	offset;
+	int	i;
+
+	dist = cos(mlx->player.pa - mlx->ray.ra) * dist;
+	nb_brick = ((64 * mlx->length) / dist);
+	offset = (mlx->length - nb_brick) / 2;
+	nb_brick /= 5;
+	i = 0;
+	while (i < nb_brick)
+	{
+		if (type == 1)
+			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->wimg1, index * 10, (i * 5) + offset);
+		else if (type == 2)
+			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->wimg2, index * 10, (i * 5) + offset);
+		i++;
+	}
+}
+
 void	draw_ray(t_mlx *mlx)
 {
+	int		i;
 	float	htan;
 	float	vtan;
 	float	hdist;
 	float	hx;
 	float	hy;
+	float	final_dist;
 
+	i = 0;
 	mlx->ray.ra = mlx->player.pa - (PI / 4);
-	while (mlx->ray.ra <= mlx->player.pa + (PI / 4))
+	if (mlx->ray.ra < 0)
+		mlx->ray.ra += 2 * PI;
+	else if (mlx->ray.ra > 2 * PI)
+		mlx->ray.ra -= 2 * PI;
+	while (i <= 90)
 	{
+		if (mlx->ray.ra < 0)
+			mlx->ray.ra += 2 * PI;
+		else if (mlx->ray.ra > 2 * PI)
+			mlx->ray.ra -= 2 * PI;
 		hdist = 10000000000;
 		//---------Horizontal Check
 		mlx->ray.dof = 0;
@@ -211,12 +207,12 @@ void	draw_ray(t_mlx *mlx)
 			mlx->ray.ry = mlx->player.py;
 			mlx->ray.dof = -1;
 		}
+		hx = mlx->ray.rx;
+		hy = mlx->ray.ry;
 		while (mlx->ray.dof >= 0)
 		{
-			mlx->ray.mx = (int) (mlx->ray.rx) >> 6;
-			mlx->ray.my = (int) (mlx->ray.ry) >> 6;
-			hx = mlx->ray.rx;
-			hy = mlx->ray.ry;
+			mlx->ray.mx = (int) (hx) >> 6;
+			mlx->ray.my = (int) (hy) >> 6;
 			hdist = pythagore(mlx->player.px, mlx->player.py, hx, hy);
 			if (mlx->ray.mx < 0 || mlx->ray.mx >= mlx->map.mapx
 				|| mlx->ray.my < 0 || mlx->ray.my >= mlx->map.mapy)
@@ -226,8 +222,8 @@ void	draw_ray(t_mlx *mlx)
 				mlx->ray.dof = -1;
 			else
 			{
-				mlx->ray.rx += mlx->ray.xo;
-				mlx->ray.ry += mlx->ray.yo;
+				hx += mlx->ray.xo;
+				hy += mlx->ray.yo;
 			}
 		}
 		
@@ -270,12 +266,48 @@ void	draw_ray(t_mlx *mlx)
 				mlx->ray.ry += mlx->ray.yo;
 			}
 		}
-		// printf("%f | %f\n", hdist, pythagore(mlx->player.px, mlx->player.py, mlx->ray.rx, mlx->ray.ry));
 		if (hdist > pythagore(mlx->player.px, mlx->player.py, mlx->ray.rx, mlx->ray.ry))
-			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->rimg2, mlx->ray.rx, mlx->ray.ry);
+		{
+			final_dist = pythagore(mlx->player.px, mlx->player.py, mlx->ray.rx, mlx->ray.ry);
+			draw_wall(mlx, final_dist, i, 1);
+		}
 		else
-			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->rimg1, hx, hy);
+		{
+			final_dist = hdist;
+			draw_wall(mlx, final_dist, i, 2);
+		}
 		mlx->ray.ra += 0.0174533;
+		i++;
+	}
+}
+
+void	player_move(t_mlx *mlx, int key)
+{
+	float	t_an;
+
+	if (key == 'w')
+	{
+		t_an = mlx->player.pa;
+		mlx->player.px += cos(t_an) * 5;
+		mlx->player.py += sin(t_an) * 5;
+	}
+	else if (key == 'a')
+	{
+		t_an = mlx->player.pa + PI2;
+		mlx->player.px += cos(t_an) * 5;
+		mlx->player.py += sin(t_an) * 5;
+	}
+	else if (key == 's')
+	{
+		t_an = mlx->player.pa + PI;
+		mlx->player.px += cos(t_an) * 5;
+		mlx->player.py += sin(t_an) * 5;
+	}
+	else if (key == 'd')
+	{
+		t_an = mlx->player.pa + PI3;
+		mlx->player.px += cos(t_an) * 5;
+		mlx->player.py += sin(t_an) * 5;
 	}
 }
 
@@ -283,17 +315,11 @@ int	key_event(int key, t_mlx *mlx)
 {
 	if (key == 65307)
 		close_window(mlx);
-	if (key == 'w')
-		mlx->player.py -= 5;
-	else if (key == 's')
-		mlx->player.py += 5;
-	else if (key == 'd')
-		mlx->player.px += 5;
-	else if (key == 'a')
-		mlx->player.px -= 5;
+	if (key == 'w' || key == 'a' || key == 's' || key == 'd')
+		player_move(mlx, key);
 	else if (key == 65361)
 	{
-		mlx->player.pa -= 0.1;
+		mlx->player.pa -= 0.0174533 * 4;
 		if (mlx->player.pa < 0)
 			mlx->player.pa += 2 * PI;
 		mlx->player.pdx = cos(mlx->player.pa) * 5;
@@ -301,7 +327,7 @@ int	key_event(int key, t_mlx *mlx)
 	}
 	else if (key == 65363)
 	{
-		mlx->player.pa += 0.1;
+		mlx->player.pa += 0.0174533 * 4;
 		if (mlx->player.pa > 2 * PI)
 			mlx->player.pa -= 2 * PI;
 		mlx->player.pdx = cos(mlx->player.pa) * 5;
@@ -309,8 +335,7 @@ int	key_event(int key, t_mlx *mlx)
 	}
 	else
 		return (0);
-	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img, 0, 0);
-	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->pimg, mlx->player.px, mlx->player.py);
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->bg, 0, 0);
 	draw_ray(mlx);
 	return (0);
 }
@@ -325,11 +350,9 @@ int	main(void)
 	mlx.mlx_win = mlx_new_window(mlx.mlx, mlx.width, mlx.length, "Cub3d");
 	mlx_hook(mlx.mlx_win, 2, 1, &key_event, &mlx);
 	mlx_hook(mlx.mlx_win, 17, 0, &close_window, &mlx);
-	// mlx_put_image_to_window(mlx.mlx, mlx.mlx_win, mlx.bg, 0, 0);
-	mlx_put_image_to_window(mlx.mlx, mlx.mlx_win, mlx.img, 0, 0);
-	draw_player(&mlx);
-	draw_ray_end(&mlx);
-	mlx_put_image_to_window(mlx.mlx, mlx.mlx_win, mlx.pimg, mlx.player.px, mlx.player.py);
+	mlx_put_image_to_window(mlx.mlx, mlx.mlx_win, mlx.bg, 0, 0);
+	// mlx_put_image_to_window(mlx.mlx, mlx.mlx_win, mlx.img, 0, 0);
+	draw_wall_brick(&mlx);
 	draw_ray(&mlx);
 	mlx_loop(mlx.mlx);
 }

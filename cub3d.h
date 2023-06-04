@@ -61,8 +61,8 @@ typedef struct s_mlx {
 	void		*bg;
 	void		*img;
 	void		*pimg;
-	void		*rimg1;
-	void		*rimg2;
+	void		*wimg1;
+	void		*wimg2;
 	char		*addr;
 	int			bpp;
 	int			ll;
