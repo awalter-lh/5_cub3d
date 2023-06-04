@@ -286,29 +286,15 @@ void	player_move(t_mlx *mlx, int key)
 	float	t_an;
 
 	if (key == 'w')
-	{
 		t_an = mlx->player.pa;
-		mlx->player.px += cos(t_an) * 5;
-		mlx->player.py += sin(t_an) * 5;
-	}
 	else if (key == 'a')
-	{
-		t_an = mlx->player.pa + PI2;
-		mlx->player.px += cos(t_an) * 5;
-		mlx->player.py += sin(t_an) * 5;
-	}
-	else if (key == 's')
-	{
-		t_an = mlx->player.pa + PI;
-		mlx->player.px += cos(t_an) * 5;
-		mlx->player.py += sin(t_an) * 5;
-	}
-	else if (key == 'd')
-	{
 		t_an = mlx->player.pa + PI3;
-		mlx->player.px += cos(t_an) * 5;
-		mlx->player.py += sin(t_an) * 5;
-	}
+	else if (key == 's')
+		t_an = mlx->player.pa + PI;
+	else if (key == 'd')
+		t_an = mlx->player.pa + PI2;
+	mlx->player.px += cos(t_an) * 5;
+	mlx->player.py += sin(t_an) * 5;
 }
 
 int	key_event(int key, t_mlx *mlx)
