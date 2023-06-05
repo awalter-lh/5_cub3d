@@ -20,8 +20,8 @@
 # include <stdio.h>
 
 # define PI 3.1415926535
-# define PI2 PI/2
-# define PI3 3*PI/2
+# define PI2 1.570796327
+# define PI3 4.712388981
 
 typedef struct s_map
 {
@@ -55,14 +55,21 @@ typedef struct s_ray
 	float	yo;
 }	t_ray;
 
+typedef struct s_dist
+{
+	float	x;
+	float	y;
+	float	dist;
+}	t_dist;
+
 typedef struct s_mlx {
 	void		*mlx;
 	void		*mlx_win;
 	void		*bg;
 	void		*img;
 	void		*pimg;
-	void		*wimg1;
-	void		*wimg2;
+	void		*img1;
+	void		*img2;
 	char		*addr;
 	int			bpp;
 	int			ll;
@@ -74,6 +81,26 @@ typedef struct s_mlx {
 	t_ray		ray;
 }	t_mlx;
 
+/*****************************event.c*******************************/
+int		close_window(t_mlx *mlx);
+void	init_screen(t_mlx *mlx);
+void	init_test_map(t_mlx *mlx);
 
+/******************************ray.c********************************/
+t_mlx	*make_bg(t_mlx *mlx);
+void	draw_wall_brick(t_mlx *mlx);
+void	draw_wall(t_mlx *mlx, float dist, int index, int type);
+
+/*****************************event.c*******************************/
+float	fix_angle(float angle);
+void	player_move(t_mlx *mlx, int key);
+int		key_event(int key, t_mlx *mlx);
+
+/*****************************image.c*******************************/
+float	pythagore(float rx, float ry, float px, float py);
+t_dist	common_wall_loop(t_mlx *mlx);
+t_dist	horizontal_check(t_mlx *mlx, float htan);
+t_dist	vertical_check(t_mlx *mlx, float vtan);
+void	draw_ray(t_mlx *mlx);
 
 #endif
