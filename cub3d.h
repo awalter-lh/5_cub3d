@@ -66,8 +66,7 @@ typedef struct s_mlx {
 	void		*mlx;
 	void		*mlx_win;
 	void		*bg;
-	void		*img;
-	void		*pimg;
+	void		*test;
 	void		*img1;
 	void		*img2;
 	char		*addr;
@@ -93,7 +92,7 @@ void	draw_wall(t_mlx *mlx, float dist, int index, int type);
 
 /*****************************event.c*******************************/
 float	fix_angle(float angle);
-void	player_move(t_mlx *mlx, int key);
+int		player_move(t_mlx *mlx, int key);
 int		key_event(int key, t_mlx *mlx);
 
 /*****************************image.c*******************************/

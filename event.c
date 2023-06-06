@@ -21,9 +21,11 @@ float	fix_angle(float angle)
 	return (angle);
 }
 
-void	player_move(t_mlx *mlx, int key)
+int	player_move(t_mlx *mlx, int key)
 {
 	float	t_an;
+	int		new_x;
+	int		new_y;
 
 	if (key == 'w')
 		t_an = mlx->player.pa;
@@ -33,8 +35,15 @@ void	player_move(t_mlx *mlx, int key)
 		t_an = mlx->player.pa + PI;
 	else if (key == 'd')
 		t_an = mlx->player.pa + PI2;
-	mlx->player.px += cos(t_an) * 5;
-	mlx->player.py += sin(t_an) * 5;
+	new_x = mlx->player.px + cos(t_an) * 5;
+	new_y = mlx->player.py + sin(t_an) * 5;
+	if (mlx->map.map[new_x >> 6][new_y >> 6] == '0')
+	{
+		mlx->player.px = new_x;
+		mlx->player.py = new_y;
+		return (1);
+	}
+	return (0);
 }
 
 int	key_event(int key, t_mlx *mlx)
@@ -42,23 +51,24 @@ int	key_event(int key, t_mlx *mlx)
 	if (key == 65307)
 		close_window(mlx);
 	if (key == 'w' || key == 'a' || key == 's' || key == 'd')
-		player_move(mlx, key);
+	{
+		if (!player_move(mlx, key))
+			return (0);
+	}
 	else if (key == 65361)
 	{
 		mlx->player.pa -= 0.0174533 * 4;
 		mlx->player.pa = fix_angle(mlx->player.pa);
-		mlx->player.pdx = cos(mlx->player.pa) * 5;
-		mlx->player.pdy = sin(mlx->player.pa) * 5;
 	}
 	else if (key == 65363)
 	{
 		mlx->player.pa += 0.0174533 * 4;
 		mlx->player.pa = fix_angle(mlx->player.pa);
-		mlx->player.pdx = cos(mlx->player.pa) * 5;
-		mlx->player.pdy = sin(mlx->player.pa) * 5;
 	}
 	else
 		return (0);
+	mlx->player.pdx = cos(mlx->player.pa) * 5;
+	mlx->player.pdy = sin(mlx->player.pa) * 5;
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->bg, 0, 0);
 	draw_ray(mlx);
 	return (0);
