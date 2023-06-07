@@ -46,24 +46,24 @@ void	draw_wall_brick(t_mlx *mlx)
 	int		j;
 
 	i = -1;
-	mlx->img1 = mlx_new_image(mlx->mlx, 10, 5);
+	mlx->img1 = mlx_new_image(mlx->mlx, 13, 20);
 	mlx->addr = mlx_get_data_addr(mlx->img1, &mlx->bpp, &mlx->ll, &mlx->endian);
-	while (++i < 10)
+	while (++i < 13)
 	{
 		j = -1;
-		while (++j < 5)
+		while (++j < 20)
 		{
 			dst = mlx->addr + (j * mlx->ll + i * (mlx->bpp / 8));
 			*(unsigned int *)dst = mlx->map.wall_color;
 		}
 	}
-	mlx->img2 = mlx_new_image(mlx->mlx, 10, 5);
+	mlx->img2 = mlx_new_image(mlx->mlx, 13, 20);
 	mlx->addr = mlx_get_data_addr(mlx->img2, &mlx->bpp, &mlx->ll, &mlx->endian);
 	i = -1;
-	while (++i < 10)
+	while (++i < 13)
 	{
 		j = -1;
-		while (++j < 10)
+		while (++j < 20)
 		{
 			dst = mlx->addr + (j * mlx->ll + i * (mlx->bpp / 8));
 			*(unsigned int *)dst = 0x00888888;
@@ -79,17 +79,19 @@ void	draw_wall(t_mlx *mlx, float dist, int index, int type)
 
 	dist = cos(mlx->player.pa - mlx->ray.ra) * dist;
 	nb_brick = ((64 * mlx->length) / dist);
-	nb_brick /= 5;
-	offset = (mlx->length - (nb_brick * 5)) / 2;
+	if (nb_brick > mlx->length)
+		nb_brick = mlx->length;
+	nb_brick /= 20;
+	offset = (mlx->length - (nb_brick * 20)) / 2;
 	i = 0;
 	while (i < nb_brick)
 	{
 		if (type == 1)
 			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img1,
-				index * 10, (i * 5) + offset);
+				index * 13, (i * 20) + offset);
 		else if (type == 2)
 			mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img2,
-				index * 10, (i * 5) + offset);
+				index * 13, (i * 20) + offset);
 		i++;
 	}
 }

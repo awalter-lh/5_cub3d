@@ -25,7 +25,7 @@ int	close_window(t_mlx *mlx)
 
 void	init_screen(t_mlx *mlx)
 {
-	mlx->width = 900;
+	mlx->width = 1170;
 	mlx->length = 540;
 	mlx->bg = mlx_new_image(mlx->mlx, mlx->width, mlx->length);
 	mlx->addr = mlx_get_data_addr(mlx->bg, &mlx->bpp, &mlx->ll, &mlx->endian);
