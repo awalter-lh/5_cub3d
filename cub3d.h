@@ -80,7 +80,7 @@ typedef struct s_mlx {
 	t_ray		ray;
 }	t_mlx;
 
-/*****************************event.c*******************************/
+/******************************main.c*******************************/
 int		close_window(t_mlx *mlx);
 void	init_screen(t_mlx *mlx);
 void	init_test_map(t_mlx *mlx);
@@ -94,6 +94,7 @@ void	draw_wall(t_mlx *mlx, float dist, int index, int type);
 float	fix_angle(float angle);
 int		player_move(t_mlx *mlx, int key);
 int		key_event(int key, t_mlx *mlx);
+int		mouse_event(int x, int y, t_mlx *mlx);
 
 /*****************************image.c*******************************/
 float	pythagore(float rx, float ry, float px, float py);

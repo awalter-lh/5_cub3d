@@ -49,6 +49,27 @@ int	player_move(t_mlx *mlx, int key)
 	return (0);
 }
 
+int	mouse_event(int x, int y, t_mlx *mlx)
+{
+	int	stat_x;
+
+	(void) y;
+	stat_x = mlx->width / 2;
+	if (x < stat_x - 5)
+		mlx->player.pa -= 0.0174533 * 2.2;
+	else if (x > stat_x + 5)
+		mlx->player.pa += 0.0174533 * 2.2;
+	mlx->player.pa = fix_angle(mlx->player.pa);
+	if (stat_x - 5 <= x && x <= stat_x + 5)
+		return (1);
+	mlx_mouse_move(mlx->mlx, mlx->mlx_win, mlx->width / 2, mlx->length / 2);
+	mlx->player.pdx = cos(mlx->player.pa) * 5;
+	mlx->player.pdy = sin(mlx->player.pa) * 5;
+	mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->bg, 0, 0);
+	draw_ray(mlx);
+	return (0);
+}
+
 int	key_event(int key, t_mlx *mlx)
 {
 	if (key == 65307)
