@@ -54,9 +54,9 @@ void	init_test_map(t_mlx *mlx)
 	mlx->map.map[6] = "10000001";
 	mlx->map.map[7] = "11111111";
 	mlx->map.map[8] = NULL;
-	mlx->player.px = 300;
+	mlx->player.px = 300; // pos * 64 + 32
 	mlx->player.py = 300;
-	mlx->player.pa = 0;
+	mlx->player.pa = 0; // N = PI3; S = PI2; E = 0; W = PI
 	mlx->player.pdx = cos(mlx->player.pa) * 5;
 	mlx->player.pdy = sin(mlx->player.pa) * 5;
 }
