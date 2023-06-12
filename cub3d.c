@@ -69,11 +69,14 @@ int	main(void)
 	init_test_map(&mlx);
 	init_screen(&mlx);
 	mlx.mlx_win = mlx_new_window(mlx.mlx, mlx.width, mlx.length, "Cub3d");
+	mlx.mlx_mwin = mlx_new_window(mlx.mlx, mlx.map.mapx * 16, mlx.map.mapy * 16, "MiniMap");
 	mlx_hook(mlx.mlx_win, 2, 1, &key_event, &mlx);
+	mlx_hook(mlx.mlx_mwin, 2, 1, &key_event, &mlx);
 	mlx_mouse_move(mlx.mlx, mlx.mlx_win, mlx.width / 2, mlx.length / 2);
 	mlx_mouse_hide(mlx.mlx, mlx.mlx_win);
 	mlx_hook(mlx.mlx_win, 6, 1L<<6, &mouse_event, &mlx);
 	mlx_hook(mlx.mlx_win, 17, 0, &close_window, &mlx);
+	mlx_hook(mlx.mlx_mwin, 17, 0, &close_window, &mlx);
 	mlx_put_image_to_window(mlx.mlx, mlx.mlx_win, mlx.bg, 0, 0);
 	draw_wall_brick(&mlx);
 	draw_ray(&mlx);

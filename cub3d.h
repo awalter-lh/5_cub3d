@@ -65,6 +65,7 @@ typedef struct s_dist
 typedef struct s_mlx {
 	void		*mlx;
 	void		*mlx_win;
+	void		*mlx_mwin;
 	void		*bg;
 	void		*test;
 	void		*img1;

@@ -79,6 +79,8 @@ int	key_event(int key, t_mlx *mlx)
 		if (!player_move(mlx, key))
 			return (0);
 	}
+	else if (key == 'i')
+		mlx_mouse_show(mlx->mlx, mlx->mlx_win);
 	else if (key == 65361)
 	{
 		mlx->player.pa -= 0.0174533 * 4;
