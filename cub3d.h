@@ -68,6 +68,8 @@ typedef struct s_mlx {
 	void		*mlx_mwin;
 	void		*bg;
 	void		*test;
+	void		*pimg;
+	void		*wimg;
 	void		*img1;
 	void		*img2;
 	char		*addr;
@@ -103,5 +105,8 @@ t_dist	common_wall_loop(t_mlx *mlx);
 t_dist	horizontal_check(t_mlx *mlx, float htan);
 t_dist	vertical_check(t_mlx *mlx, float vtan);
 void	draw_ray(t_mlx *mlx);
+void	map_wallimg(t_mlx *mlx);
+void	make_minimap(t_mlx *mlx);
+void	map_playerimg(t_mlx *mlx);
 
 #endif

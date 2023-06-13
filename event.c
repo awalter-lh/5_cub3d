@@ -44,6 +44,8 @@ int	player_move(t_mlx *mlx, int key)
 	{
 		mlx->player.px = new_x;
 		mlx->player.py = new_y;
+		mlx_clear_window(mlx->mlx, mlx->mlx_mwin);
+		make_minimap(mlx);
 		return (1);
 	}
 	return (0);
@@ -79,8 +81,6 @@ int	key_event(int key, t_mlx *mlx)
 		if (!player_move(mlx, key))
 			return (0);
 	}
-	else if (key == 'i')
-		mlx_mouse_show(mlx->mlx, mlx->mlx_win);
 	else if (key == 65361)
 	{
 		mlx->player.pa -= 0.0174533 * 4;
