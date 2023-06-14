@@ -27,9 +27,8 @@ int	player_move(t_mlx *mlx, int key)
 	int		new_x;
 	int		new_y;
 
-	if (key == 'w')
-		t_an = mlx->player.pa;
-	else if (key == 'a')
+	t_an = mlx->player.pa;
+	if (key == 'a')
 		t_an = mlx->player.pa + PI3;
 	else if (key == 's')
 		t_an = mlx->player.pa + PI;
@@ -44,7 +43,7 @@ int	player_move(t_mlx *mlx, int key)
 	{
 		mlx->player.px = new_x;
 		mlx->player.py = new_y;
-		mlx_clear_window(mlx->mlx, mlx->mlx_mwin);
+		mlx_clear_window(mlx->mlx, mlx->mlx_map);
 		make_minimap(mlx);
 		return (1);
 	}

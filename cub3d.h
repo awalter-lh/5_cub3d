@@ -65,7 +65,7 @@ typedef struct s_dist
 typedef struct s_mlx {
 	void		*mlx;
 	void		*mlx_win;
-	void		*mlx_mwin;
+	void		*mlx_map;
 	void		*bg;
 	void		*test;
 	void		*pimg;
@@ -88,25 +88,27 @@ int		close_window(t_mlx *mlx);
 void	init_screen(t_mlx *mlx);
 void	init_test_map(t_mlx *mlx);
 
-/******************************ray.c********************************/
-t_mlx	*make_bg(t_mlx *mlx);
-void	draw_wall_brick(t_mlx *mlx);
-void	draw_wall(t_mlx *mlx, float dist, int index, int type);
-
 /*****************************event.c*******************************/
 float	fix_angle(float angle);
 int		player_move(t_mlx *mlx, int key);
 int		key_event(int key, t_mlx *mlx);
 int		mouse_event(int x, int y, t_mlx *mlx);
 
-/*****************************image.c*******************************/
+/******************************ray.c********************************/
 float	pythagore(float rx, float ry, float px, float py);
 t_dist	common_wall_loop(t_mlx *mlx);
 t_dist	horizontal_check(t_mlx *mlx, float htan);
 t_dist	vertical_check(t_mlx *mlx, float vtan);
 void	draw_ray(t_mlx *mlx);
+
+/*****************************image.c*******************************/
+t_mlx	*make_bg(t_mlx *mlx);
+void	draw_wall_brick(t_mlx *mlx);
+void	draw_wall(t_mlx *mlx, float dist, int index, int type);
+
+/****************************minimap.c******************************/
+void	map_playerimg(t_mlx *mlx);
 void	map_wallimg(t_mlx *mlx);
 void	make_minimap(t_mlx *mlx);
-void	map_playerimg(t_mlx *mlx);
 
 #endif
