@@ -31,24 +31,24 @@ void	init_test_map(t_mlx *mlx)
 	mlx->map.floor_color = 0x00000000;
 	mlx->map.sky_color = 0x00FFFFFF;
 	mlx->map.wall_color = 0x00AAAAAA;
-	mlx->map.mapx = 15;
-	mlx->map.mapy = 10;
+	mlx->map.mapx = 10;
+	mlx->map.mapy = 13;
 	mlx->map.map = malloc(sizeof(char *) * 11);
-	while (++i < 11)
+	while (++i < 14)
 		mlx->map.map[i] = malloc(sizeof(char) * 16);
-	mlx->map.map[0] = "      111      ";
-	mlx->map.map[1] = "     10101     ";
-	mlx->map.map[2] = "     10001     ";
-	mlx->map.map[3] = "     10001     ";
-	mlx->map.map[4] = "     10001     ";
-	mlx->map.map[5] = "    1100011    ";
-	mlx->map.map[6] = "  11100000111  ";
-	mlx->map.map[7] = " 1100011100011 ";
-	mlx->map.map[8] = "1110011 1100111";
-	mlx->map.map[9] = "  1111   1111  ";
+	mlx->map.map[0]  = "111111111111111";
+	mlx->map.map[1]  = "100000000000001";
+	mlx->map.map[2]  = "111111011110111";
+	mlx->map.map[3]  = "100000000000001";
+	mlx->map.map[4]  = "111111011110111";
+	mlx->map.map[5]  = "100000000000001";
+	mlx->map.map[6]  = "111111011110111";
+	mlx->map.map[7]  = "100000000000001";
+	mlx->map.map[8]  = "110111011100111";
+	mlx->map.map[9]  = " 111111111111  ";
 	mlx->map.map[10] = NULL;
-	mlx->player.px = 400; // pos * 64 + 32
-	mlx->player.py = 300;
+	mlx->player.px = 96; // pos * 64 + 32
+	mlx->player.py = 96;
 	mlx->player.pa = 0; // N = PI3; S = PI2; E = 0; W = PI
 	mlx->player.pdx = cos(mlx->player.pa) * 5;
 	mlx->player.pdy = sin(mlx->player.pa) * 5;
