@@ -14,10 +14,12 @@
 # define CUB3D_H
 
 # include "minilibx-linux/mlx.h"
+# include "minilibx-linux/mlx_int.h"
 # include <math.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include "./xpm_parser/xpm_parser.h"
 
 # define PI 3.1415926535
 # define PI2 1.570796327
@@ -28,6 +30,10 @@ typedef struct s_map
 	int		sky_color;
 	int		floor_color;
 	int		wall_color;
+	t_xpm	n_texture;
+	t_xpm	s_texture;
+	t_xpm	e_texture;
+	t_xpm	w_texture;
 	int		mapx;
 	int		mapy;
 	char	**map;
@@ -62,22 +68,29 @@ typedef struct s_dist
 	float	dist;
 }	t_dist;
 
+typedef struct s_wall
+{
+	float	dist;
+	int		offset;
+	int		height;
+	char	texture;
+}	t_wall;
+
 typedef struct s_mlx {
 	void		*mlx;
 	void		*mlx_win;
 	void		*mlx_map;
-	void		*bg;
-	void		*test;
-	void		*pimg;
-	void		*wimg;
-	void		*img1;
-	void		*img2;
-	char		*addr;
-	int			bpp;
-	int			ll;
-	int			endian;
+	int			**buff;
+	int			**t_buff;
+	t_img		*game_img;
+	t_img		*bg;
+	t_img		*test;
+	t_img		*pimg;
+	t_img		*wimg;
+	t_img		*img1;
+	t_img		*img2;
 	int			width;
-	int			length;
+	int			height;
 	t_map		map;
 	t_player	player;
 	t_ray		ray;
@@ -102,9 +115,10 @@ t_dist	vertical_check(t_mlx *mlx, float vtan);
 void	draw_ray(t_mlx *mlx);
 
 /*****************************image.c*******************************/
-t_mlx	*make_bg(t_mlx *mlx);
+t_mlx	*make_game_img(t_mlx *mlx);
 void	draw_wall_brick(t_mlx *mlx);
 void	draw_wall(t_mlx *mlx, float dist, int index, int type);
+void	compare_buffs(t_mlx *mlx);
 
 /****************************minimap.c******************************/
 void	map_playerimg(t_mlx *mlx);

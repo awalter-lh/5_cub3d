@@ -28,7 +28,6 @@ t_dist	common_wall_loop(t_mlx *mlx)
 	{
 		mlx->ray.mx = (int)(dist.x) >> 6;
 		mlx->ray.my = (int)(dist.y) >> 6;
-		dist.dist = pythagore(mlx->player.px, mlx->player.py, dist.x, dist.y);
 		if (mlx->ray.mx < 0 || mlx->ray.mx >= mlx->map.mapx
 			|| mlx->ray.my < 0 || mlx->ray.my >= mlx->map.mapy)
 			mlx->ray.dof = -1;
@@ -41,6 +40,7 @@ t_dist	common_wall_loop(t_mlx *mlx)
 			dist.y += mlx->ray.yo;
 		}
 	}
+	dist.dist = pythagore(mlx->player.px, mlx->player.py, dist.x, dist.y);
 	return (dist);
 }
 
@@ -102,10 +102,10 @@ void	draw_ray(t_mlx *mlx)
 	t_dist	h_dist;
 	t_dist	v_dist;
 
-	i = 0;
-	mlx->ray.ra = mlx->player.pa - (PI / 4);
+	i = -1;
+	mlx->ray.ra = mlx->player.pa - (33 * 0.0174533);
 	mlx->ray.ra = fix_angle(mlx->ray.ra);
-	while (i <= 90)
+	while (++i < mlx->width)
 	{
 		mlx->ray.ra = fix_angle(mlx->ray.ra);
 		mlx->ray.dof = 0;
@@ -118,7 +118,8 @@ void	draw_ray(t_mlx *mlx)
 			draw_wall(mlx, v_dist.dist, i, 1);
 		else
 			draw_wall(mlx, h_dist.dist, i, 2);
-		mlx->ray.ra += 0.0174533;
-		i++;
+		mlx->ray.ra = mlx->ray.ra + (1.15192 / (float)mlx->width);
 	}
+	// printf("%f\n", 66.0 / (float)mlx->width);
+	compare_buffs(mlx);
 }
