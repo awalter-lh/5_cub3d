@@ -120,6 +120,5 @@ void	draw_ray(t_mlx *mlx)
 			draw_wall(mlx, h_dist.dist, i, 2);
 		mlx->ray.ra = mlx->ray.ra + (1.15192 / (float)mlx->width);
 	}
-	// printf("%f\n", 66.0 / (float)mlx->width);
 	compare_buffs(mlx);
 }

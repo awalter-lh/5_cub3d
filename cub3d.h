@@ -22,8 +22,8 @@
 # include "./xpm_parser/xpm_parser.h"
 
 # define PI 3.1415926535
-# define PI2 1.570796327
-# define PI3 4.712388981
+# define PI2 PI/2
+# define PI3 3*PI/2
 
 typedef struct s_map
 {
@@ -73,6 +73,7 @@ typedef struct s_wall
 	float	dist;
 	int		offset;
 	int		height;
+	int		real_height;
 	char	texture;
 }	t_wall;
 

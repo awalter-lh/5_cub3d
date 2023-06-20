@@ -30,10 +30,10 @@ void	init_test_map(t_mlx *mlx)
 	mlx->map.floor_color = 0x00000000;
 	mlx->map.sky_color = 0x00FFFFFF;
 	mlx->map.wall_color = 0x00AAAAAA;
-	mlx->map.n_texture = *xpm_parsing("./test.xpm");
-	mlx->map.s_texture = *xpm_parsing("./test.xpm");
-	mlx->map.e_texture = *xpm_parsing("./test.xpm");
-	mlx->map.w_texture = *xpm_parsing("./test.xpm");
+	mlx->map.n_texture = *xpm_parsing("./tile187.xpm");
+	mlx->map.s_texture = *xpm_parsing("./tile187.xpm");
+	mlx->map.e_texture = *xpm_parsing("./cadeau.xpm");
+	mlx->map.w_texture = *xpm_parsing("./galaxy.xpm");
 	mlx->map.mapx = 15;
 	mlx->map.mapy = 10;
 	mlx->map.map = malloc(sizeof(char *) * 11);

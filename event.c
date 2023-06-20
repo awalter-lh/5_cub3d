@@ -29,11 +29,11 @@ int	player_move(t_mlx *mlx, int key)
 
 	t_an = mlx->player.pa;
 	if (key == 'a')
-		t_an = mlx->player.pa + PI3;
+		t_an += PI3;
 	else if (key == 's')
-		t_an = mlx->player.pa + PI;
+		t_an += PI;
 	else if (key == 'd')
-		t_an = mlx->player.pa + PI2;
+		t_an += PI2;
 	new_x = mlx->player.px + cos(t_an) * 5;
 	new_y = mlx->player.py + sin(t_an) * 5;
 	if (mlx->map.map[(new_y + 5) >> 6][(new_x + 5) >> 6] == '0'

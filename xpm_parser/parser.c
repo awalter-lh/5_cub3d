@@ -47,9 +47,9 @@ int	get_color(char *buff)
 	while (buff[i] != '"')
 	{
 		if ('0' <= buff[i] && buff[i] <= '9')
-			color = color + (buff[i] - '0') + pow(16, y);
+			color = color + ((buff[i] - '0') * pow(16, y));
 		else if ('A' <= buff[i] && buff[i] <= 'F')
-			color = color + (buff[i] - 'A' + 10) + pow(16, y);
+			color = color + ((buff[i] - 'A' + 10) * pow(16, y));
 		y--;
 		i++;
 	}
@@ -114,6 +114,6 @@ t_xpm	*xpm_parsing(char *file)
 	free_tab(tab);
 	if (fill_values(fd, xpm) || fill_mat(fd, xpm))
 		return (NULL);
-	close (fd);
+	close(fd);
 	return (xpm);
 }
