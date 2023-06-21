@@ -50,6 +50,25 @@ void	map_wallimg(t_mlx *mlx)
 	}
 }
 
+void	map_doorimg(t_mlx *mlx)
+{
+	char	*dst;
+	int		i;
+	int		j;
+
+	i = -1;
+	mlx->dimg = mlx_new_image(mlx->mlx, 12, 12);
+	while (++i < 12)
+	{
+		j = -1;
+		while (++j < 12)
+		{
+			dst = mlx->dimg->data + (j * mlx->dimg->size_line + i * (mlx->dimg->bpp / 8));
+			*(unsigned int *)dst = 0x00706450;
+		}
+	}
+}
+
 void	make_minimap(t_mlx *mlx)
 {
 	int	i;
@@ -64,6 +83,9 @@ void	make_minimap(t_mlx *mlx)
 			if (mlx->map.map[j][i] == '0')
 				mlx_put_image_to_window(mlx->mlx, mlx->mlx_map, mlx->wimg,
 					i << 4, j << 4);
+			else if (mlx->map.map[j][i] == 'C' || mlx->map.map[j][i] == 'O')
+				mlx_put_image_to_window(mlx->mlx, mlx->mlx_map, mlx->dimg,
+					(i << 4) + 2, (j << 4) + 2);
 		}
 	}
 	mlx_put_image_to_window(mlx->mlx, mlx->mlx_map, mlx->pimg,

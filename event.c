@@ -21,6 +21,14 @@ float	fix_angle(float angle)
 	return (angle);
 }
 
+int	collision(t_mlx *mlx, int new_x, int new_y)
+{
+	if (mlx->map.map[(new_y) >> 6][(new_x) >> 6] == '1'
+		|| mlx->map.map[(new_y) >> 6][(new_x) >> 6] == 'C')
+		return (1);
+	return (0);
+}
+
 int	player_move(t_mlx *mlx, int key)
 {
 	float	t_an;
@@ -36,10 +44,7 @@ int	player_move(t_mlx *mlx, int key)
 		t_an += PI2;
 	new_x = mlx->player.px + cos(t_an) * 5;
 	new_y = mlx->player.py + sin(t_an) * 5;
-	if (mlx->map.map[(new_y + 5) >> 6][(new_x + 5) >> 6] == '0'
-		&& mlx->map.map[(new_y - 5) >> 6][(new_x + 5) >> 6] == '0'
-		&& mlx->map.map[(new_y + 5) >> 6][(new_x - 5) >> 6] == '0'
-		&& mlx->map.map[(new_y - 5) >> 6][(new_x - 5) >> 6] == '0')
+	if (!collision(mlx, new_x, new_y))
 	{
 		mlx->player.px = new_x;
 		mlx->player.py = new_y;
@@ -70,6 +75,24 @@ int	mouse_event(int x, int y, t_mlx *mlx)
 	return (0);
 }
 
+int	open_door(int key, t_mlx *mlx)
+{
+	int	new_x;
+	int	new_y;
+
+	if (key != ' ')
+		return (0);
+	new_x = mlx->player.px + cos(mlx->player.pa) * 65;
+	new_y = mlx->player.py + sin(mlx->player.pa) * 65;
+	if (mlx->map.map[(new_y) >> 6][(new_x) >> 6] == 'C')
+		mlx->map.map[(new_y) >> 6][(new_x) >> 6] = 'O';
+	else if (mlx->map.map[(new_y) >> 6][(new_x) >> 6] == 'O')
+		mlx->map.map[(new_y) >> 6][(new_x) >> 6] = 'C';
+	else
+		return (0);
+	return (1);
+}
+
 int	key_event(int key, t_mlx *mlx)
 {
 	if (key == 65307)
@@ -89,11 +112,10 @@ int	key_event(int key, t_mlx *mlx)
 		mlx->player.pa += 0.0174533 * 4;
 		mlx->player.pa = fix_angle(mlx->player.pa);
 	}
-	else
+	else if (!open_door(key, mlx))
 		return (0);
 	mlx->player.pdx = cos(mlx->player.pa) * 5;
 	mlx->player.pdy = sin(mlx->player.pa) * 5;
-	// mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->bg, 0, 0);
 	draw_ray(mlx);
 	return (0);
 }

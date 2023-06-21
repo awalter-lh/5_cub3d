@@ -30,25 +30,25 @@ void	init_test_map(t_mlx *mlx)
 	mlx->map.floor_color = 0x00000000;
 	mlx->map.sky_color = 0x00FFFFFF;
 	mlx->map.wall_color = 0x00AAAAAA;
-	mlx->map.n_texture = *xpm_parsing("./tile187.xpm");
-	mlx->map.s_texture = *xpm_parsing("./tile187.xpm");
-	mlx->map.e_texture = *xpm_parsing("./cadeau.xpm");
-	mlx->map.w_texture = *xpm_parsing("./galaxy.xpm");
+	mlx->map.n_texture = *xpm_parsing("./textures/test.xpm");
+	mlx->map.s_texture = *xpm_parsing("./textures/train.xpm");
+	mlx->map.e_texture = *xpm_parsing("./textures/tile187.xpm");
+	mlx->map.w_texture = *xpm_parsing("./textures/tile187.xpm");
 	mlx->map.mapx = 15;
 	mlx->map.mapy = 10;
 	mlx->map.map = malloc(sizeof(char *) * 11);
 	while (++i < 11)
 		mlx->map.map[i] = malloc(sizeof(char) * 16);
-	mlx->map.map[0]  = "111111111111111";
-	mlx->map.map[1]  = "100000000000001";
-	mlx->map.map[2]  = "111111011110111";
-	mlx->map.map[3]  = "100000000000001";
-	mlx->map.map[4]  = "111111011110111";
-	mlx->map.map[5]  = "100000000000001";
-	mlx->map.map[6]  = "111111011110111";
-	mlx->map.map[7]  = "100000000000001";
-	mlx->map.map[8]  = "110111011100111";
-	mlx->map.map[9]  = " 111111111111  ";
+	ft_strlcpy(mlx->map.map[0], "111111111111111", 20);
+	ft_strlcpy(mlx->map.map[1], "100000000000001", 20);
+	ft_strlcpy(mlx->map.map[2], "100000000000001", 20);
+	ft_strlcpy(mlx->map.map[3], "100000000000001", 20);
+	ft_strlcpy(mlx->map.map[4], "100000000000001", 20);
+	ft_strlcpy(mlx->map.map[5], "11O111000000001", 20);
+	ft_strlcpy(mlx->map.map[6], "100001000000001", 20);
+	ft_strlcpy(mlx->map.map[7], "10000C000000001", 20);
+	ft_strlcpy(mlx->map.map[8], "100001000000001", 20);
+	ft_strlcpy(mlx->map.map[9], "111111111111111", 20);
 	mlx->map.map[10] = NULL;
 	mlx->player.px = 96; // pos * 64 + 32
 	mlx->player.py = 96;
@@ -98,9 +98,9 @@ int	main(void)
 	mlx_hook(mlx.mlx_win, 17, 0, &close_window, &mlx);
 	mlx_hook(mlx.mlx_map, 17, 0, &close_window, &mlx);
 	map_wallimg(&mlx);
+	map_doorimg(&mlx);
 	map_playerimg(&mlx);
 	make_minimap(&mlx);
-	draw_wall_brick(&mlx);
 	draw_ray(&mlx);
 	mlx_loop (mlx.mlx);
 }

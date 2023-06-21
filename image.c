@@ -61,36 +61,6 @@ t_mlx	*make_game_img(t_mlx *mlx)
 	return (mlx);
 }
 
-void	draw_wall_brick(t_mlx *mlx)
-{
-	char	*dst;
-	int		i;
-	int		j;
-
-	i = -1;
-	mlx->img1 = mlx_new_image(mlx->mlx, 13, 20);
-	while (++i < 13)
-	{
-		j = -1;
-		while (++j < 20)
-		{
-			dst = mlx->img1->data + (j * mlx->img1->size_line + i * (mlx->img1->bpp / 8));
-			*(unsigned int *)dst = mlx->map.wall_color;
-		}
-	}
-	mlx->img2 = mlx_new_image(mlx->mlx, 13, 20);
-	i = -1;
-	while (++i < 13)
-	{
-		j = -1;
-		while (++j < 20)
-		{
-			dst = mlx->img2->data + (j * mlx->img2->size_line + i * (mlx->img2->bpp / 8));
-			*(unsigned int *)dst = 0x00888888;
-		}
-	}
-}
-
 int	get_wall_color(t_mlx *mlx, t_wall wall, int y)
 {
 	int		ray_x;

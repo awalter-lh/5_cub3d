@@ -84,12 +84,9 @@ typedef struct s_mlx {
 	int			**buff;
 	int			**t_buff;
 	t_img		*game_img;
-	t_img		*bg;
-	t_img		*test;
 	t_img		*pimg;
 	t_img		*wimg;
-	t_img		*img1;
-	t_img		*img2;
+	t_img		*dimg;
 	int			width;
 	int			height;
 	t_map		map;
@@ -125,5 +122,6 @@ void	compare_buffs(t_mlx *mlx);
 void	map_playerimg(t_mlx *mlx);
 void	map_wallimg(t_mlx *mlx);
 void	make_minimap(t_mlx *mlx);
+void	map_doorimg(t_mlx *mlx);
 
 #endif
