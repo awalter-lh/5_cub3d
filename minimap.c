@@ -25,7 +25,9 @@ void	map_playerimg(t_mlx *mlx)
 		j = -1;
 		while (++j < 4)
 		{
-			dst = mlx->pimg->data + (j * mlx->pimg->size_line + i * (mlx->pimg->bpp / 8));
+			dst = mlx->pimg->data;
+			dst += j * mlx->pimg->size_line;
+			dst += i * (mlx->pimg->bpp / 8);
 			*(unsigned int *)dst = 0x00FF0000;
 		}
 	}
@@ -44,7 +46,9 @@ void	map_wallimg(t_mlx *mlx)
 		j = -1;
 		while (++j < 16)
 		{
-			dst = mlx->wimg->data + (j * mlx->wimg->size_line + i * (mlx->wimg->bpp / 8));
+			dst = mlx->wimg->data;
+			dst += j * mlx->wimg->size_line;
+			dst += i * (mlx->wimg->bpp / 8);
 			*(unsigned int *)dst = 0x00928672;
 		}
 	}
@@ -63,7 +67,9 @@ void	map_doorimg(t_mlx *mlx)
 		j = -1;
 		while (++j < 12)
 		{
-			dst = mlx->dimg->data + (j * mlx->dimg->size_line + i * (mlx->dimg->bpp / 8));
+			dst = mlx->dimg->data;
+			dst += j * mlx->dimg->size_line;
+			dst += i * (mlx->dimg->bpp / 8);
 			*(unsigned int *)dst = 0x00706450;
 		}
 	}

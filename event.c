@@ -21,14 +21,6 @@ float	fix_angle(float angle)
 	return (angle);
 }
 
-int	collision(t_mlx *mlx, int new_x, int new_y)
-{
-	if (mlx->map.map[(new_y) >> 6][(new_x) >> 6] == '1'
-		|| mlx->map.map[(new_y) >> 6][(new_x) >> 6] == 'C')
-		return (1);
-	return (0);
-}
-
 int	player_move(t_mlx *mlx, int key)
 {
 	float	t_an;
@@ -44,7 +36,8 @@ int	player_move(t_mlx *mlx, int key)
 		t_an += PI2;
 	new_x = mlx->player.px + cos(t_an) * 5;
 	new_y = mlx->player.py + sin(t_an) * 5;
-	if (!collision(mlx, new_x, new_y))
+	if (!(mlx->map.map[(new_y) >> 6][(new_x) >> 6] == '1'
+		|| mlx->map.map[(new_y) >> 6][(new_x) >> 6] == 'C'))
 	{
 		mlx->player.px = new_x;
 		mlx->player.py = new_y;

@@ -27,7 +27,9 @@ void	compare_buffs(t_mlx *mlx)
 			if (mlx->buff[y][x] != mlx->t_buff[y][x])
 			{
 				mlx->buff[y][x] = mlx->t_buff[y][x];
-				dst = mlx->game_img->data + (y * mlx->game_img->size_line + x * (mlx->game_img->bpp / 8));
+				dst = mlx->game_img->data;
+				dst += y * mlx->game_img->size_line;
+				dst += x * (mlx->game_img->bpp / 8);
 				*(unsigned int *)dst = mlx->buff[y][x];
 			}
 			x++;
@@ -59,43 +61,6 @@ t_mlx	*make_game_img(t_mlx *mlx)
 		i++;
 	}
 	return (mlx);
-}
-
-int	get_wall_color(t_mlx *mlx, t_wall wall, int y)
-{
-	int		ray_x;
-	int		ray_y;
-	int		wall_part_x;
-	int		wall_part_y;
-
-	ray_x = mlx->player.px + (cos(mlx->ray.ra) * wall.dist);
-	ray_y = mlx->player.py + (sin(mlx->ray.ra) * wall.dist);
-	ray_x = ray_x % 64;
-	ray_y = ray_y % 64;
-	if (wall.texture == 'N')
-	{
-		wall_part_y = ((float)mlx->map.n_texture.nb_row / (float)wall.real_height) * (y + ((wall.real_height - wall.height) / 2));
-		wall_part_x = ((float)mlx->map.n_texture.nb_colomn / 64) * ray_x;
-		return (mlx->map.n_texture.mat[wall_part_y][wall_part_x]);
-	}
-	else if (wall.texture == 'S')
-	{
-		wall_part_y = ((float)mlx->map.s_texture.nb_row / (float)wall.real_height) * (y + ((wall.real_height - wall.height) / 2));
-		wall_part_x = ((float)mlx->map.s_texture.nb_colomn / 64) * ray_x;
-		return (mlx->map.s_texture.mat[wall_part_y][wall_part_x]);
-	}
-	else if (wall.texture == 'E')
-	{
-		wall_part_y = ((float)mlx->map.e_texture.nb_row / (float)wall.real_height) * (y + ((wall.real_height - wall.height) / 2));
-		wall_part_x = ((float)mlx->map.e_texture.nb_colomn / 64) * ray_y;
-		return (mlx->map.e_texture.mat[wall_part_y][wall_part_x]);
-	}
-	else
-	{
-		wall_part_y = ((float)mlx->map.w_texture.nb_row / (float)wall.real_height) * (y + ((wall.real_height - wall.height) / 2));
-		wall_part_x = ((float)mlx->map.w_texture.nb_colomn / 64) * ray_y;
-		return (mlx->map.w_texture.mat[wall_part_y][wall_part_x]);
-	}
 }
 
 void	fill_temp_buffer(t_mlx *mlx, t_wall wall, int index)

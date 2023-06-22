@@ -12,16 +12,6 @@
 
 #include "cub3d.h"
 
-int	close_window(t_mlx *mlx)
-{
-	mlx_destroy_image(mlx->mlx, mlx->game_img);
-	mlx_destroy_window(mlx->mlx, mlx->mlx_win);
-	mlx_destroy_window(mlx->mlx, mlx->mlx_map);
-	mlx_destroy_display(mlx->mlx);
-	free(mlx->mlx);
-	exit(0);
-}
-
 void	init_test_map(t_mlx *mlx)
 {
 	int	i;
@@ -30,16 +20,16 @@ void	init_test_map(t_mlx *mlx)
 	mlx->map.floor_color = 0x00000000;
 	mlx->map.sky_color = 0x00FFFFFF;
 	mlx->map.wall_color = 0x00AAAAAA;
-	mlx->map.n_texture = *xpm_parsing("./textures/test.xpm");
-	mlx->map.s_texture = *xpm_parsing("./textures/train.xpm");
-	mlx->map.e_texture = *xpm_parsing("./textures/tile187.xpm");
-	mlx->map.w_texture = *xpm_parsing("./textures/tile187.xpm");
+	mlx->map.n_texture = xpm_parsing("./textures/tile187.xpm");
+	mlx->map.s_texture = xpm_parsing("./textures/tile187.xpm");
+	mlx->map.e_texture = xpm_parsing("./textures/tile187.xpm");
+	mlx->map.w_texture = xpm_parsing("./textures/tile187.xpm");
 	mlx->map.mapx = 15;
 	mlx->map.mapy = 10;
 	mlx->map.map = malloc(sizeof(char *) * 11);
-	while (++i < 11)
+	while (++i < 10)
 		mlx->map.map[i] = malloc(sizeof(char) * 16);
-	ft_strlcpy(mlx->map.map[0], "111111111111111", 20);
+	ft_strlcpy(mlx->map.map[0], "011111111111111", 20);
 	ft_strlcpy(mlx->map.map[1], "100000000000001", 20);
 	ft_strlcpy(mlx->map.map[2], "100000000000001", 20);
 	ft_strlcpy(mlx->map.map[3], "100000000000001", 20);
@@ -63,7 +53,6 @@ void	init_screen(t_mlx *mlx)
 
 	i = -1;
 	mlx->mlx = mlx_init();
-	init_test_map(mlx);
 	mlx->width = 858;
 	mlx->height = 540;
 	mlx->buff = malloc(sizeof(int *) * (mlx->height + 1));
@@ -72,15 +61,16 @@ void	init_screen(t_mlx *mlx)
 		exit (1);
 	while (++i < mlx->height)
 	{
-		mlx->buff[i] = malloc(sizeof(int) * (mlx->width + 1));
-		mlx->t_buff[i] = malloc(sizeof(int) * (mlx->width + 1));
+		mlx->buff[i] = ft_calloc(sizeof(int), (mlx->width + 1));
+		mlx->t_buff[i] = ft_calloc(sizeof(int), (mlx->width + 1));
 		if (!mlx->buff[i] || !mlx->t_buff[i])
 			exit(1);
 	}
 	mlx->buff[i] = NULL;
+	mlx->mlx_win = mlx_new_window(mlx->mlx, mlx->width, mlx->height, "Cub3d");
+	init_test_map(mlx);
 	mlx->game_img = mlx_new_image(mlx->mlx, mlx->width, mlx->height);
 	mlx = make_game_img(mlx);
-	mlx->mlx_win = mlx_new_window(mlx->mlx, mlx->width, mlx->height, "Cub3d");
 	mlx->mlx_map = mlx_new_window(mlx->mlx,
 			mlx->map.mapx * 16, mlx->map.mapy * 16, "MiniMap");
 }

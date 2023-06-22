@@ -28,7 +28,7 @@ int	ft_atoi(char *nptr)
 	return (n);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	ft_strlcpy(char *dst, char *src, size_t size)
 {
 	size_t	i;
 	size_t	rv;
@@ -97,5 +97,6 @@ char	**ft_split(char *s, char c)
 		return (NULL);
 	lst = loop(s, c, lst, &n);
 	lst[n] = NULL;
+	free(s);
 	return (lst);
 }

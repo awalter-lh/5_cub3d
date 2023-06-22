@@ -30,10 +30,10 @@ typedef struct s_map
 	int		sky_color;
 	int		floor_color;
 	int		wall_color;
-	t_xpm	n_texture;
-	t_xpm	s_texture;
-	t_xpm	e_texture;
-	t_xpm	w_texture;
+	t_xpm	*n_texture;
+	t_xpm	*s_texture;
+	t_xpm	*e_texture;
+	t_xpm	*w_texture;
 	int		mapx;
 	int		mapy;
 	char	**map;
@@ -70,6 +70,7 @@ typedef struct s_dist
 
 typedef struct s_wall
 {
+	int		y;
 	float	dist;
 	int		offset;
 	int		height;
@@ -114,7 +115,6 @@ void	draw_ray(t_mlx *mlx);
 
 /*****************************image.c*******************************/
 t_mlx	*make_game_img(t_mlx *mlx);
-void	draw_wall_brick(t_mlx *mlx);
 void	draw_wall(t_mlx *mlx, float dist, int index, int type);
 void	compare_buffs(t_mlx *mlx);
 
@@ -123,5 +123,8 @@ void	map_playerimg(t_mlx *mlx);
 void	map_wallimg(t_mlx *mlx);
 void	make_minimap(t_mlx *mlx);
 void	map_doorimg(t_mlx *mlx);
+
+int		close_window(t_mlx *mlx);
+int		get_wall_color(t_mlx *mlx, t_wall wall, int y);
 
 #endif

@@ -74,6 +74,7 @@ int	fill_values(int fd, t_xpm *xpm)
 		xpm->values[i] = get_color(buff);
 		free(buff);
 	}
+	xpm->str_tab[xpm->nb_color] = NULL;
 	return (0);
 }
 
