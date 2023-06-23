@@ -95,16 +95,17 @@ typedef struct s_mlx {
 	t_ray		ray;
 }	t_mlx;
 
-/******************************main.c*******************************/
-int		close_window(t_mlx *mlx);
-void	init_screen(t_mlx *mlx);
+/*****************************cub3d.c*******************************/
 void	init_test_map(t_mlx *mlx);
+void	init_screen(t_mlx *mlx);
+int		main(void);
 
 /*****************************event.c*******************************/
 float	fix_angle(float angle);
 int		player_move(t_mlx *mlx, int key);
-int		key_event(int key, t_mlx *mlx);
 int		mouse_event(int x, int y, t_mlx *mlx);
+int		open_door(int key, t_mlx *mlx);
+int		key_event(int key, t_mlx *mlx);
 
 /******************************ray.c********************************/
 float	pythagore(float rx, float ry, float px, float py);
@@ -114,17 +115,28 @@ t_dist	vertical_check(t_mlx *mlx, float vtan);
 void	draw_ray(t_mlx *mlx);
 
 /*****************************image.c*******************************/
-t_mlx	*make_game_img(t_mlx *mlx);
-void	draw_wall(t_mlx *mlx, float dist, int index, int type);
 void	compare_buffs(t_mlx *mlx);
+t_mlx	*make_game_img(t_mlx *mlx);
+void	fill_temp_buffer(t_mlx *mlx, t_wall wall, int index);
+void	draw_wall(t_mlx *mlx, float dist, int index, int type);
 
 /****************************minimap.c******************************/
 void	map_playerimg(t_mlx *mlx);
 void	map_wallimg(t_mlx *mlx);
-void	make_minimap(t_mlx *mlx);
 void	map_doorimg(t_mlx *mlx);
+void	make_minimap(t_mlx *mlx);
 
+/**************************close_window.c***************************/
+void	free_xpm_struct(t_xpm *xpm);
+void	free_map(t_map map);
+void	free_buff(t_mlx *mlx);
 int		close_window(t_mlx *mlx);
+
+/***************************wall_color.c****************************/
+int		texture_n(t_mlx *mlx, t_wall wall, int ray_x);
+int		texture_s(t_mlx *mlx, t_wall wall, int ray_x);
+int		texture_e(t_mlx *mlx, t_wall wall, int ray_y);
+int		texture_w(t_mlx *mlx, t_wall wall, int ray_y);
 int		get_wall_color(t_mlx *mlx, t_wall wall, int y);
 
 #endif
