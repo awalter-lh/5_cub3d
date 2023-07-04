@@ -43,6 +43,7 @@ typedef struct s_player
 {
 	int		px;
 	int		py;
+	int		crouch;
 	float	pdx;
 	float	pdy;
 	float	pa;

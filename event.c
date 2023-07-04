@@ -45,6 +45,7 @@ int	player_move(t_mlx *mlx, int key)
 		make_minimap(mlx);
 		return (1);
 	}
+	write(1, "\a", 1);
 	return (0);
 }
 
