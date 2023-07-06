@@ -6,7 +6,7 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:01:53 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/06/13 13:59:47 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/06 21:44:11 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,30 @@ char	*remove_end(char *str)
 	ret[i] = 0;
 	free(str);
 	return (ret);
+}
+
+void	free_info(t_parse_info *info)
+{
+	if (info->map)
+		free_tab(info->map);
+	if (info->no)
+		free(info->no);
+	if (info->so)
+		free(info->so);
+	if (info->we)
+		free(info->we);
+	if (info->ea)
+		free(info->ea);
+	if (info->floor)
+		free(info->floor);
+	if (info->sky)
+		free(info->sky);
+}
+
+int	all_completed(t_parse_info *info)
+{
+	if (!info->no || !info->so || !info->we || !info->ea
+		|| !info->floor || !info->sky)
+		return (0);
+	return (1);
 }

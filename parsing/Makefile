@@ -6,7 +6,7 @@
 #    By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/12 20:51:15 by nbeaufil          #+#    #+#              #
-#    Updated: 2023/06/13 11:58:43 by nbeaufil         ###   ########.fr        #
+#    Updated: 2023/07/06 21:49:18 by nbeaufil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ SRCS	=	gnl/get_next_line.c			\
 			gnl/get_next_line_utils.c	\
 			parsing_utils.c				\
 			parsing.c					\
-			utils.c
+			utils.c						\
+			parsing_ext.c
 
 OBJS	=	${SRCS:.c=.o}
 
