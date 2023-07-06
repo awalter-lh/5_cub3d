@@ -19,7 +19,6 @@ void	init_test_map(t_mlx *mlx)
 	i = -1;
 	mlx->map.floor_color = 0x00000000;
 	mlx->map.sky_color = 0x00FFFFFF;
-	mlx->map.wall_color = 0x00AAAAAA;
 	mlx->map.n_texture = xpm_parsing("./textures/tile187.xpm");
 	mlx->map.s_texture = xpm_parsing("./textures/tile187.xpm");
 	mlx->map.e_texture = xpm_parsing("./textures/tile187.xpm");
@@ -40,8 +39,8 @@ void	init_test_map(t_mlx *mlx)
 	ft_strlcpy(mlx->map.map[8], "100001000000001", 20);
 	ft_strlcpy(mlx->map.map[9], "111111111111111", 20);
 	mlx->map.map[10] = NULL;
-	mlx->player.px = 96; // pos * 64 + 32
-	mlx->player.py = 96;
+	mlx->player.px = 96; // pos(x) * 64 + 32
+	mlx->player.py = 96; // pos(y) * 64 + 32
 	mlx->player.pa = 0; // N = PI3; S = PI2; E = 0; W = PI
 	mlx->player.pdx = cos(mlx->player.pa) * 5;
 	mlx->player.pdy = sin(mlx->player.pa) * 5;
@@ -67,8 +66,8 @@ void	init_screen(t_mlx *mlx)
 			exit(1);
 	}
 	mlx->buff[i] = NULL;
+	init_test_map(mlx); // to remove
 	mlx->mlx_win = mlx_new_window(mlx->mlx, mlx->width, mlx->height, "Cub3d");
-	init_test_map(mlx);
 	mlx->game_img = mlx_new_image(mlx->mlx, mlx->width, mlx->height);
 	mlx = make_game_img(mlx);
 	mlx->mlx_map = mlx_new_window(mlx->mlx,

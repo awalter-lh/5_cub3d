@@ -6,7 +6,7 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:57:09 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/06/13 15:25:03 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/06 15:45:01 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 
 typedef struct s_parse_info
 {
+	int		mapx;
+	int		mapy;
 	char	**map;
 	char	*no;
 	char	*so;
@@ -55,11 +57,17 @@ char			*ft_strdup(const char *s);
 /* =========== proto =========== */
 char			*get_next_line(int fd);
 
+/* ========= utils_gnl ========= */
+int				type_finder(char *type);
+int				extract_type(int *pos, char *str);
+char			*extract_path(char *path, int pos);
+
 /* =========== utils =========== */
 t_parse_info	parse_info_init(void);
 t_parse_error	init_error(void);
 int				is_white_space(char c);
 int				put_error(char *str, int code);
+int				comp(const char *s1, const char *s2);
 
 /* ========== parsing ========== */
 int				check_file(char *str, t_parse_info *info);

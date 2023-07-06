@@ -56,3 +56,19 @@ t_parse_error	init_error(void)
 	ret.line = NULL;
 	return (ret);
 }
+
+int	comp(const char *s1, const char *s2)
+{
+	size_t			i;
+	unsigned char	*t1;
+	unsigned char	*t2;
+
+	i = 0;
+	if (!s1 || !s2)
+		return (-1);
+	t1 = (unsigned char *)s1;
+	t2 = (unsigned char *)s2;
+	while ((t1[i] && t2[i]) && (t1[i] == t2[i]))
+		i++;
+	return (t1[i] - t2[i]);
+}
