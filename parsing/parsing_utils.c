@@ -6,11 +6,21 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:01:53 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/07/06 21:44:11 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/08 09:42:45 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	free_tab(char **tab)
+{
+	int	i;
+	
+	i = 0;
+	while (tab && tab[i])
+		free(tab[i++]);
+	free(tab);
+}
 
 int	empty_line(char *str)
 {
@@ -82,6 +92,8 @@ void	free_info(t_parse_info *info)
 
 int	all_completed(t_parse_info *info)
 {
+	if (!info)
+		return (1);
 	if (!info->no || !info->so || !info->we || !info->ea
 		|| !info->floor || !info->sky)
 		return (0);

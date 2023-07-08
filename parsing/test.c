@@ -6,43 +6,39 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:25:09 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/06/13 14:25:49 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:11:47 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-/*int	main(int ac, char *av[])
+void	print_info(t_parse_info *info)
 {
-	int		fd;
-	char	*line;
-
-	if (ac != 2)
-		return (1);
-	fd = open(av[1], O_RDONLY);
-	if (fd == -1)
-		return (0);
-	line = get_next_line(fd);
-	if (!line)
-	{
-		close(fd);
-		return (-1);
-	}
-	printf("line              == \"%s\"\n\n", line);
-	line = remove_end(line);
-	printf("line no end       == \"%s\"\n\n", line);
-	line = remove_end(line);
-	printf("line no end again == \"%s\"\n\n", line);
-	free(line);
-	close(fd);
-	return (0);
+	if (info->no)
+		printf("no    : %s\n", info->no);
+	if (info->so)
+		printf("so    : %s\n", info->so);
+	if (info->we)
+		printf("we    : %s\n", info->we);
+	if (info->ea)
+		printf("ea    : %s\n", info->ea);
+	if (info->floor)
+		printf("floor : %s\n", info->floor);
+	if (info->no)
+		printf("sky   : %s\n", info->sky);
 }
-*/
 
 int	main(int ac, char *av[])
 {
+	t_parse_info	info;
+	int				ret;
+
 	if (ac != 2)
 		return (0);
-	printf("check_file -> %d (\"%s\", NULL)\n", check_file(av[1], NULL), av[1]);
+	info = parse_info_init();
+	ret = check_file(av[1], &info);
+	printf("check_file -> %d (\"%s\", info)\n", ret, av[1]);
+	if (ret != -1)
+		print_info(&info);
 	return (0);
 }

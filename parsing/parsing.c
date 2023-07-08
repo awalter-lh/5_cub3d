@@ -6,11 +6,13 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:16:27 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/07/06 22:39:26 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/08 10:17:38 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	print_info(t_parse_info *info);
 
 int	check_file(char *str, t_parse_info *info)
 {
@@ -18,7 +20,6 @@ int	check_file(char *str, t_parse_info *info)
 	int	fd;
 
 	ret = 1;
-	(void)info;
 	if (!str)
 		return (0);
 	if (!check_ext(str, ".cub"))
@@ -36,17 +37,23 @@ int	check_file(char *str, t_parse_info *info)
 
 int	file_extractor(int fd, t_parse_info *info, char *name)
 {
-	int		ret;
 	char	*line;
+	int		idx;
+	int		ret;
 
+	idx = 0;
 	while (1)
 	{
+		ret = 0;
 		line = get_next_line(fd);
+		idx++;
 		if (!line || all_completed(info))
 			break ;
 		if (!empty_line(line))
-			ret = extract_inf(info, line, name);
+			ret = extract_inf(info, line, name, idx);
 		free(line);
+		if (ret == -1)
+			return (-1);
 	}
 	if (!all_completed(info))
 		return (-1);
@@ -55,7 +62,7 @@ int	file_extractor(int fd, t_parse_info *info, char *name)
 	return (0);
 }
 
-int	extract_inf(t_parse_info *info, char *line, char *name)
+int	extract_inf(t_parse_info *info, char *line, char *name, int idx)
 {
 	int		pos;
 	int		type;
@@ -63,9 +70,9 @@ int	extract_inf(t_parse_info *info, char *line, char *name)
 
 	type = extract_type(&pos, line);
 	if (type < 0)
-		return (type_error(type, name));
+		return (type_error(type, name, idx));
 	else if (is_in(type, info))
-		return (type_error(-4, name));
+		return (type_error(-4, name, idx));
 	path = extract_path(line, pos);
 	if (!path)
 		return (put_error("error: allocation failed\n", 1));

@@ -6,7 +6,7 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:53:07 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/07/06 22:38:21 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/08 09:56:43 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,19 @@
 // -2 no path
 // -3 bad type
 // -4 already in
-int	type_error(int type, char *name)
+int	type_error(int type, char *name, int idx)
 {
-	put_error("error: ", 1);
-	put_error(name, 1);
-	put_error(": ", 1);
+	put_error("error: ", 3);
+	put_error(name, 3);
+	put_error(" (", 3);
+	ft_putnbr_fd(idx, 2);
+	put_error("): ", 3);
 	if (type == -2)
 		put_error(ERROR3, 1);
 	else if (type == -3)
 		put_error(ERROR1, 1);
 	else if (type == -4)
 		put_error(ERROR2, 1);
-	put_error("\n", 1);
 	return (-1);
 }
 
@@ -78,8 +79,8 @@ int	extract_type(int *pos, char *str)
 	type[1] = str[i + 1];
 	type[2] = 0;
 	i += 2;
-	if (!(str && str[i] && (is_white_space(str[i])
-				&& !is_white_space(type[1]))))
+	if (!(str && str[i]) && (is_white_space(str[i])
+				&& !is_white_space(type[1])))
 		return (-3);
 	while (str && str[i] && is_white_space(str[i]))
 		i++;

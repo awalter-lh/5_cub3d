@@ -6,7 +6,7 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:58:04 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/06/14 11:00:28 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/08 09:47:45 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,11 @@ int	put_error(char *str, int code)
 	}
 	else if (code == 2)
 		perror(str);
+	else if (code == 3)
+	{
+		while (str[++i])
+			write(2, &str[i], 1);
+	}
 	return (-1);
 }
 
@@ -44,16 +49,6 @@ t_parse_info	parse_info_init(void)
 	ret.ea = NULL;
 	ret.floor = NULL;
 	ret.sky = NULL;
-	return (ret);
-}
-
-t_parse_error	init_error(void)
-{
-	t_parse_error	ret;
-
-	ret.word = -1;
-	ret.line_idx = -1;
-	ret.line = NULL;
 	return (ret);
 }
 
