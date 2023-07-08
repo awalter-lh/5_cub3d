@@ -6,7 +6,7 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:53:07 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/07/08 09:56:43 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/08 20:25:29 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	extract_type(int *pos, char *str)
 	type[2] = 0;
 	i += 2;
 	if (!(str && str[i]) && (is_white_space(str[i])
-				&& !is_white_space(type[1])))
+			&& !is_white_space(type[1])))
 		return (-3);
 	while (str && str[i] && is_white_space(str[i]))
 		i++;

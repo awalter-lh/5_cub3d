@@ -6,7 +6,7 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:57:09 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/07/08 09:55:50 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/09 00:03:12 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_parse_info
 {
 	int		mapx;
 	int		mapy;
+	int		px;
+	int		py;
 	char	**map;
 	char	*no;
 	char	*so;
@@ -65,7 +67,7 @@ char			*extract_path(char *path, int pos);
 
 /* =========== utils =========== */
 t_parse_info	parse_info_init(void);
-t_parse_error	init_error(void);
+int				is_digit(char c);
 int				is_white_space(char c);
 int				put_error(char *str, int code);
 int				comp(const char *s1, const char *s2);
@@ -73,7 +75,8 @@ int				comp(const char *s1, const char *s2);
 /* ========== parsing ========== */
 int				check_file(char *str, t_parse_info *info);
 int				file_extractor(int fd, t_parse_info *info, char *name);
-int				extract_inf(t_parse_info *info, char *line, char *name, int idx);
+int				extract_inf(t_parse_info *info,
+					char *line, char *name, int idx);
 
 /* ======= parsing_utils ======= */
 int				empty_line(char *str);
@@ -85,6 +88,14 @@ int				all_completed(t_parse_info *info);
 /* ======== parsing_ext ========= */
 int				is_in(int type, t_parse_info *info);
 void			ft_putnbr_fd(int n, int fd);
+int				check_info_validity(int type, char *path);
+
+/* ========= check_num ========= */
+int				ft_atoi(const char *nptr);
+int				check_num(char *str, int *act_pos);
+int				check_color_validity(char *str);
+int				give_num(char *str, int *act_pos, int *res, int power);
+int				extract_num(char *str);
 
 /* ======== extract_inf ======== */
 int				type_error(int type, char *name, int idx);
@@ -92,5 +103,23 @@ void			assign_type(t_parse_info *info, int type, char *path);
 int				type_finder(char *type);
 int				extract_type(int *pos, char *str);
 char			*extract_path(char *path, int pos);
+
+/* ======== extract_map ======== */
+char			**tdtab_push(char **tab, char *to_add);
+char			**find_map(int fd);
+void			find_greater(t_parse_info *info, char **tab);
+int				extract_map(int fd, t_parse_info *info);
+
+/* ====== extract_map_ext ====== */
+void			find_pos(t_parse_info *info);
+int				check_map(char **tab, int sz_x, int sz_y);
+int				check_tab_char(char **tab, int pos);
+char			**duplicate_tab(char **tab);
+
+/* ========== lee_algo ========= */
+int				check(char **tab, int size, int x, int y);
+int				modified_tab(char **tab, int sz_x, int sz_y, int *count);
+
+char			**free_tab(char **tab);
 
 #endif

@@ -6,11 +6,18 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 10:58:04 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/07/08 09:47:45 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/08 22:13:50 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+int	is_digit(char c)
+{
+	if (c >= '0' && c <= '9')
+		return (1);
+	return (0);
+}
 
 int	is_white_space(char c)
 {
@@ -42,6 +49,10 @@ t_parse_info	parse_info_init(void)
 {
 	t_parse_info	ret;
 
+	ret.mapx = 0;
+	ret.mapy = 0;
+	ret.px = 0;
+	ret.py = 0;
 	ret.map = NULL;
 	ret.no = NULL;
 	ret.so = NULL;

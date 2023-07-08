@@ -6,7 +6,7 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:01:53 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/07/08 09:38:52 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/08 11:54:36 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,29 @@ void	ft_putnbr_fd(int n, int fd)
 		to_put = n + '0';
 		write(fd, &to_put, 1);
 	}
+}
+
+int	check_info_validity(int type, char *path)
+{
+	int	fd;
+
+	if (type < 5)
+	{
+		fd = open(path, O_RDONLY);
+		if (fd == -1)
+		{
+			put_error(path, 3);
+			return (put_error(": no such file or directory", 1));
+		}
+		close(fd);
+	}
+	else
+	{
+		if (-1 == check_color_validity(path))
+		{
+			put_error(path, 3);
+			return (put_error(": invalid syntax", 1));
+		}
+	}
+	return (0);
 }

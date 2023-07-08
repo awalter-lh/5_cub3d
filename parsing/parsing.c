@@ -6,13 +6,11 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:16:27 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/07/08 10:17:38 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/08 20:32:41 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-
-void	print_info(t_parse_info *info);
 
 int	check_file(char *str, t_parse_info *info)
 {
@@ -55,10 +53,11 @@ int	file_extractor(int fd, t_parse_info *info, char *name)
 		if (ret == -1)
 			return (-1);
 	}
+	free(line);
 	if (!all_completed(info))
 		return (-1);
-	// if (extract_map(fd, info, name))
-	// 	return (-1);
+	if (-1 == extract_map(fd, info))
+		return (-1);
 	return (0);
 }
 
@@ -76,6 +75,11 @@ int	extract_inf(t_parse_info *info, char *line, char *name, int idx)
 	path = extract_path(line, pos);
 	if (!path)
 		return (put_error("error: allocation failed\n", 1));
+	if (-1 == check_info_validity(type, path))
+	{
+		free(path);
+		return (-1);
+	}
 	assign_type(info, type, path);
 	return (0);
 }

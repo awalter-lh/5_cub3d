@@ -6,7 +6,7 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 11:25:09 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/07/08 10:11:47 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/08 20:22:38 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ void	print_info(t_parse_info *info)
 		printf("floor : %s\n", info->floor);
 	if (info->no)
 		printf("sky   : %s\n", info->sky);
+	printf("mapx  : %d\nmapy  : %d\n", info->mapx, info->mapy);
+	printf("px  : %d\npy  : %d\n", info->px, info->py);
+	if (info->map)
+		for (int i = 0; info->map[i]; i++)
+			printf("%2d %s\n", i, info->map[i]);
 }
 
 int	main(int ac, char *av[])
@@ -39,6 +44,9 @@ int	main(int ac, char *av[])
 	ret = check_file(av[1], &info);
 	printf("check_file -> %d (\"%s\", info)\n", ret, av[1]);
 	if (ret != -1)
+	{
 		print_info(&info);
+		free_info(&info);
+	}
 	return (0);
 }
