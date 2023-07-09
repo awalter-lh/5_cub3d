@@ -42,7 +42,12 @@ void	init_map(char *str, t_mlx *mlx)
 	
 	info = parse_info_init();
 	if (-1 == check_file(str, &info))
+	{
+		mlx_destroy_display(mlx->mlx);
+		free_buff(mlx);
+		free(mlx->mlx);
 		exit(0);
+	}
 	init_mlx_map(&info, mlx);
 }
 
