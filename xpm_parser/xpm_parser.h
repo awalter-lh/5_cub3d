@@ -31,7 +31,7 @@ typedef struct s_xmp
 }	t_xpm;
 
 char	**free_tab(char **tab);
-int		comp(const char *s1, const char *s2);
+int		comp_parse(char *str, char *buff);
 char	**ft_split(char *str, char c);
 int		ft_atoi(const char *nptr);
 int		fill_mat(int fd, t_xpm *xpm);

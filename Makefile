@@ -29,6 +29,8 @@ FLAGS	=	-Wall -Wextra -Werror
 
 LIBS	=	minilibx-linux/libmlx_Linux.a -lXext -lX11 -lm -g3
 
+#  -fsanitize=address
+
 .c.o:
 	gcc ${FLAGS} -c $< -o ${<:.c=.o}
 
