@@ -37,7 +37,7 @@ int	player_move(t_mlx *mlx, int key)
 	new_x = mlx->player.px + cos(t_an) * 5;
 	new_y = mlx->player.py + sin(t_an) * 5;
 	if (!(mlx->map.map[(new_y) >> 6][(new_x) >> 6] == '1'
-		|| mlx->map.map[(new_y) >> 6][(new_x) >> 6] == 'C'))
+		|| mlx->map.map[(new_y) >> 6][(new_x) >> 6] == '2'))
 	{
 		mlx->player.px = new_x;
 		mlx->player.py = new_y;
@@ -78,10 +78,10 @@ int	open_door(int key, t_mlx *mlx)
 		return (0);
 	new_x = mlx->player.px + cos(mlx->player.pa) * 65;
 	new_y = mlx->player.py + sin(mlx->player.pa) * 65;
-	if (mlx->map.map[(new_y) >> 6][(new_x) >> 6] == 'C')
-		mlx->map.map[(new_y) >> 6][(new_x) >> 6] = 'O';
-	else if (mlx->map.map[(new_y) >> 6][(new_x) >> 6] == 'O')
-		mlx->map.map[(new_y) >> 6][(new_x) >> 6] = 'C';
+	if (mlx->map.map[(new_y) >> 6][(new_x) >> 6] == '2')
+		mlx->map.map[(new_y) >> 6][(new_x) >> 6] = '3';
+	else if (mlx->map.map[(new_y) >> 6][(new_x) >> 6] == '3')
+		mlx->map.map[(new_y) >> 6][(new_x) >> 6] = '2';
 	else
 		return (0);
 	return (1);

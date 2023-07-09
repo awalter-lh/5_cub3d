@@ -86,10 +86,12 @@ void	make_minimap(t_mlx *mlx)
 		i = -1;
 		while (++i < mlx->map.mapx)
 		{
-			if (mlx->map.map[j][i] == '0')
+			if (mlx->map.map[j][i] == '0' || mlx->map.map[j][i] == 'W'
+				|| mlx->map.map[j][i] == 'N' || mlx->map.map[j][i] == 'S'
+				|| mlx->map.map[j][i] == 'E')
 				mlx_put_image_to_window(mlx->mlx, mlx->mlx_map, mlx->wimg,
 					i << 4, j << 4);
-			else if (mlx->map.map[j][i] == 'C' || mlx->map.map[j][i] == 'O')
+			else if (mlx->map.map[j][i] == '2' || mlx->map.map[j][i] == '3')
 				mlx_put_image_to_window(mlx->mlx, mlx->mlx_map, mlx->dimg,
 					(i << 4) + 2, (j << 4) + 2);
 		}

@@ -39,7 +39,7 @@ void	init_mlx_map(t_parse_info *info, t_mlx *mlx)
 void	init_map(char *str, t_mlx *mlx)
 {
 	t_parse_info	info;
-	
+
 	info = parse_info_init();
 	if (-1 == check_file(str, &info))
 	{

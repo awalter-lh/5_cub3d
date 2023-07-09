@@ -36,7 +36,7 @@ typedef struct s_parse_info
 	int		mapy;
 	int		px;
 	int		py;
-	float		pa;
+	float	pa;
 	char	**map;
 	char	*no;
 	char	*so;

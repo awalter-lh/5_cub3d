@@ -33,7 +33,7 @@ t_dist	common_wall_loop(t_mlx *mlx)
 			mlx->ray.dof = -1;
 		else if ((mlx->ray.mx < mlx->map.mapx || mlx->ray.my < mlx->map.mapy)
 			&& (mlx->map.map[mlx->ray.my][mlx->ray.mx] == '1'
-			|| mlx->map.map[mlx->ray.my][mlx->ray.mx] == 'C'))
+			|| mlx->map.map[mlx->ray.my][mlx->ray.mx] == '2'))
 			mlx->ray.dof = -1;
 		else
 		{
