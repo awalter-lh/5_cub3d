@@ -27,7 +27,7 @@ void	print_info(t_parse_info *info)
 	if (info->no)
 		printf("sky   : %s\n", info->sky);
 	printf("mapx  : %d\nmapy  : %d\n", info->mapx, info->mapy);
-	printf("px  : %d\npy  : %d\n", info->px, info->py);
+	printf("px  : %d\npy  : %d\npa  : %f\n", info->px, info->py, info->pa);
 	if (info->map)
 		for (int i = 0; info->map[i]; i++)
 			printf("%2d %s\n", i, info->map[i]);

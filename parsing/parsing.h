@@ -6,7 +6,7 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 14:57:09 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/07/09 00:03:12 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/09 04:39:02 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # define ERROR1 "invalid ID"
 # define ERROR2 "multiple ID definition"
 # define ERROR3 "no path after ID"
+# define PI 3.1415926535
+# define PI2 PI/2
+# define PI3 3*PI/2
 
 /* ========== struct ========== */
 
@@ -33,6 +36,7 @@ typedef struct s_parse_info
 	int		mapy;
 	int		px;
 	int		py;
+	float		pa;
 	char	**map;
 	char	*no;
 	char	*so;
@@ -41,14 +45,6 @@ typedef struct s_parse_info
 	char	*floor;
 	char	*sky;
 }	t_parse_info;
-
-typedef struct s_parse_error
-{
-	int		type;
-	int		word;
-	int		line_idx;
-	char	*line;
-}	t_parse_error;
 
 /* ========= utils_gnl ========= */
 size_t			ft_strlen(const char *s);
@@ -119,7 +115,7 @@ char			**duplicate_tab(char **tab);
 /* ========== lee_algo ========= */
 int				check(char **tab, int size, int x, int y);
 int				modified_tab(char **tab, int sz_x, int sz_y, int *count);
-
+void			change_pinfo(t_parse_info *info, int i, int j, char type);
 char			**free_tab(char **tab);
 
 #endif

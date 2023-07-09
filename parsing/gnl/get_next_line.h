@@ -32,7 +32,7 @@ char	*line_remainder(char *buff);
 char	*ft_strcat_mall(char *buff1, char *buff2);
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 64
+#  define BUFFER_SIZE 1
 # endif
 
 # ifndef FD_LIMIT

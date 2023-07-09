@@ -6,7 +6,7 @@
 /*   By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/06 13:53:07 by nbeaufil          #+#    #+#             */
-/*   Updated: 2023/07/09 00:02:38 by nbeaufil         ###   ########.fr       */
+/*   Updated: 2023/07/09 04:38:09 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,18 @@ int	modified_tab(char **tab, int sz_x, int sz_y, int *count)
 		}
 	}
 	return (0);
+}
+
+void	change_pinfo(t_parse_info *info, int i, int j, char type)
+{
+	info->px = j * 64 + 32;
+	info->py = i * 64 + 32;
+	if (type == 'N')
+		info->pa = PI3;
+	if (type == 'S')
+		info->pa = PI2;
+	if (type == 'E')
+		info->pa = 0;
+	if (type == 'W')
+		info->pa = PI;
 }

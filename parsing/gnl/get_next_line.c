@@ -32,7 +32,7 @@ char	*get_next_line(int fd)
 		idx_buff++;
 	idx_buff++;
 	if (idx_buff < (int)ft_strlen(buff))
-		while (buff[idx_buff])
+		while (buff[idx_buff] && idx_save < BUFFER_SIZE)
 			save[fd][idx_save++] = buff[idx_buff++];
 	save[fd][idx_save] = 0;
 	free(buff);

@@ -6,27 +6,28 @@
 #    By: nbeaufil <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/12 20:51:15 by nbeaufil          #+#    #+#              #
-#    Updated: 2023/07/08 23:21:10 by nbeaufil         ###   ########.fr        #
+#    Updated: 2023/07/09 05:14:28 by nbeaufil         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME	=	libparsing.a
+NAME	=	cub3D
 
-SRCS	=	gnl/get_next_line.c			\
-			gnl/get_next_line_utils.c	\
-			parsing_utils.c				\
-			parsing.c					\
-			check_num.c					\
-			utils.c						\
-			parsing_ext.c				\
-			extract_map.c				\
-			extract_map_ext.c			\
-			extract_inf.c				\
-			lee_algo.c
+SRCS	=	close_window.c				\
+			cub3d.c						\
+			event.c						\
+			image.c						\
+			minimap.c					\
+			ray.c						\
+			wall_color.c				\
+			xpm_parser/mat_filling.c	\
+			xpm_parser/parser.c			\
+			xpm_parser/parser_utils.c
 
 OBJS	=	${SRCS:.c=.o}
 
 FLAGS	=	-Wall -Wextra -Werror
+
+LIBS	=	minilibx-linux/libmlx_Linux.a -lXext -lX11 -lm -g3
 
 .c.o:
 	gcc ${FLAGS} -c $< -o ${<:.c=.o}
@@ -34,13 +35,15 @@ FLAGS	=	-Wall -Wextra -Werror
 all	:	${NAME}
 
 ${NAME}	:	${OBJS}
-	ar rcs ${NAME} ${OBJS}
-	ranlib ${NAME}
+	make all -C parsing
+	gcc ${FLAGS} ${OBJS} ${LIBS} parsing/libparsing.a -o ${NAME}
 
 clean	:
+	make clean -C parsing
 	rm -f ${OBJS}
 
 fclean	:	clean
+	make fclean -C parsing
 	rm -f ${NAME}
 
 re	:	fclean	all

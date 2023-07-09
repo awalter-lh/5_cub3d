@@ -12,22 +12,6 @@
 
 #include "xpm_parser.h"
 
-int	ft_atoi(char *nptr)
-{
-	int	i;
-	int	n;
-
-	i = 0;
-	n = 0;
-	while (nptr[i])
-	{
-		if ('0' <= nptr[i] && nptr[i] <= '9')
-			n = n * 10 + (nptr[i] - '0');
-		i++;
-	}
-	return (n);
-}
-
 size_t	ft_strlcpy(char *dst, char *src, size_t size)
 {
 	size_t	i;

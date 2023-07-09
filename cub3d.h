@@ -6,7 +6,7 @@
 /*   By: awalter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 09:40:38 by awalter           #+#    #+#             */
-/*   Updated: 2023/06/02 09:40:39 by awalter          ###   ########.fr       */
+/*   Updated: 2023/07/09 05:16:07 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include "./xpm_parser/xpm_parser.h"
+# include "./parsing/parsing.h"
 
 # define PI 3.1415926535
 # define PI2 PI/2
@@ -97,9 +98,10 @@ typedef struct s_mlx {
 }	t_mlx;
 
 /*****************************cub3d.c*******************************/
-void	init_test_map(t_mlx *mlx);
-void	init_screen(t_mlx *mlx);
-int		main(void);
+int		extract_num(char *str);
+void	init_mlx_map(t_parse_info *info, t_mlx *mlx);
+void	init_map(char *str, t_mlx *mlx);
+void	init_screen(char *str, t_mlx *mlx);
 
 /*****************************event.c*******************************/
 float	fix_angle(float angle);

@@ -99,8 +99,7 @@ void	find_pos(t_parse_info *info)
 			type = info->map[i][j];
 			if (type != '0' && type != '1' && type != '2')
 			{
-				info->px = j * 64 + 32;
-				info->py = i * 64 + 32;
+				change_pinfo(info, i, j, type);
 				return ;
 			}
 		}

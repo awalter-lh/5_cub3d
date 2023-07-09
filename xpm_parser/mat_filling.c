@@ -12,20 +12,6 @@
 
 #include "xpm_parser.h"
 
-int	comp(char *str, char *buff)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (buff[i] != str[i])
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 int	find_value(char *buff, t_xpm *xpm)
 {
 	int	i;

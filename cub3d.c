@@ -6,47 +6,47 @@
 /*   By: awalter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 09:40:50 by awalter           #+#    #+#             */
-/*   Updated: 2023/06/02 09:40:51 by awalter          ###   ########.fr       */
+/*   Updated: 2023/07/09 05:23:15 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_test_map(t_mlx *mlx)
+void	init_mlx_map(t_parse_info *info, t_mlx *mlx)
 {
-	int	i;
-
-	i = -1;
-	mlx->map.floor_color = 0x00000000;
-	mlx->map.sky_color = 0x00FFFFFF;
-	mlx->map.n_texture = xpm_parsing("./textures/tile187.xpm");
-	mlx->map.s_texture = xpm_parsing("./textures/tile187.xpm");
-	mlx->map.e_texture = xpm_parsing("./textures/tile187.xpm");
-	mlx->map.w_texture = xpm_parsing("./textures/tile187.xpm");
-	mlx->map.mapx = 15;
-	mlx->map.mapy = 10;
-	mlx->map.map = malloc(sizeof(char *) * 11);
-	while (++i < 10)
-		mlx->map.map[i] = malloc(sizeof(char) * 16);
-	ft_strlcpy(mlx->map.map[0], "011111111111111", 20);
-	ft_strlcpy(mlx->map.map[1], "100000000000001", 20);
-	ft_strlcpy(mlx->map.map[2], "100000000000001", 20);
-	ft_strlcpy(mlx->map.map[3], "100000000000001", 20);
-	ft_strlcpy(mlx->map.map[4], "100000000000001", 20);
-	ft_strlcpy(mlx->map.map[5], "11O111000000001", 20);
-	ft_strlcpy(mlx->map.map[6], "100001000000001", 20);
-	ft_strlcpy(mlx->map.map[7], "10000C000000001", 20);
-	ft_strlcpy(mlx->map.map[8], "100001000000001", 20);
-	ft_strlcpy(mlx->map.map[9], "111111111111111", 20);
-	mlx->map.map[10] = NULL;
-	mlx->player.px = 96; // pos(x) * 64 + 32
-	mlx->player.py = 96; // pos(y) * 64 + 32
-	mlx->player.pa = 0; // N = PI3; S = PI2; E = 0; W = PI
+	mlx->map.floor_color = extract_num(info->floor);
+	mlx->map.sky_color = extract_num(info->sky);
+	mlx->map.n_texture = xpm_parsing(info->no);
+	mlx->map.s_texture = xpm_parsing(info->so);
+	mlx->map.e_texture = xpm_parsing(info->ea);
+	mlx->map.w_texture = xpm_parsing(info->we);
+	mlx->map.mapx = info->mapx;
+	mlx->map.mapy = info->mapy;
+	mlx->map.map = info->map;
+	mlx->player.px = info->px;
+	mlx->player.py = info->py;
+	mlx->player.pa = info->pa;
 	mlx->player.pdx = cos(mlx->player.pa) * 5;
 	mlx->player.pdy = sin(mlx->player.pa) * 5;
+	free(info->floor);
+	free(info->sky);
+	free(info->no);
+	free(info->so);
+	free(info->ea);
+	free(info->we);
 }
 
-void	init_screen(t_mlx *mlx)
+void	init_map(char *str, t_mlx *mlx)
+{
+	t_parse_info	info;
+	
+	info = parse_info_init();
+	if (-1 == check_file(str, &info))
+		exit(0);
+	init_mlx_map(&info, mlx);
+}
+
+void	init_screen(char *str, t_mlx *mlx)
 {
 	int	i;
 
@@ -66,7 +66,7 @@ void	init_screen(t_mlx *mlx)
 			exit(1);
 	}
 	mlx->buff[i] = NULL;
-	init_test_map(mlx); // to remove
+	init_map(str, mlx);
 	mlx->mlx_win = mlx_new_window(mlx->mlx, mlx->width, mlx->height, "Cub3d");
 	mlx->game_img = mlx_new_image(mlx->mlx, mlx->width, mlx->height);
 	mlx = make_game_img(mlx);
@@ -74,11 +74,13 @@ void	init_screen(t_mlx *mlx)
 			mlx->map.mapx * 16, mlx->map.mapy * 16, "MiniMap");
 }
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	t_mlx	mlx;
 
-	init_screen(&mlx);
+	if (ac != 2)
+		return (0);
+	init_screen(av[1], &mlx);
 	mlx_hook(mlx.mlx_win, 2, 1, &key_event, &mlx);
 	mlx_hook(mlx.mlx_map, 2, 1, &key_event, &mlx);
 	mlx_mouse_move(mlx.mlx, mlx.mlx_win, mlx.width / 2, mlx.height / 2);
@@ -92,4 +94,5 @@ int	main(void)
 	make_minimap(&mlx);
 	draw_ray(&mlx);
 	mlx_loop (mlx.mlx);
+	return (0);
 }

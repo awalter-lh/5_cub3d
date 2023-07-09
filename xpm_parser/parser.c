@@ -78,21 +78,6 @@ int	fill_values(int fd, t_xpm *xpm)
 	return (0);
 }
 
-void	free_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	if (!tab)
-		return ;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
 t_xpm	*xpm_parsing(char *file)
 {
 	int		fd;

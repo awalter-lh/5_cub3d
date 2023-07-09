@@ -6,7 +6,7 @@
 /*   By: awalter <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 13:14:56 by awalter           #+#    #+#             */
-/*   Updated: 2023/06/17 13:14:57 by awalter          ###   ########.fr       */
+/*   Updated: 2023/07/09 05:17:51 by nbeaufil         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <math.h>
-# include "./get_next_line/get_next_line.h"
+# include "../parsing/gnl/get_next_line.h"
 
 typedef struct s_xmp
 {
@@ -30,8 +30,10 @@ typedef struct s_xmp
 	int		**mat;
 }	t_xpm;
 
+char	**free_tab(char **tab);
+int		comp(const char *s1, const char *s2);
 char	**ft_split(char *str, char c);
-int		ft_atoi(char *nptr);
+int		ft_atoi(const char *nptr);
 int		fill_mat(int fd, t_xpm *xpm);
 t_xpm	*xpm_parsing(char *file);
 size_t	ft_strlcpy(char *dst, char *src, size_t size);
